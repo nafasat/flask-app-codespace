@@ -2,11 +2,7 @@ from flask import Flask
 import os
 import redis
 
-try:
-    r = redis.Redis(host='34.131.18.147',port=6379, password='HdfcBank123')
-except:
-    errors.append("Unable to get URL. Please make sure it's valid and try again.")
-    return {"error": errors}
+r = redis.Redis(host='34.131.18.147',port=6379, password='HdfcBank123')
 
 app = Flask(__name__) #creating the Flask class object
 @app.route('/',methods = ['GET']) #decorator drfines the   
@@ -19,15 +15,20 @@ def port():
     PORT=os.environ['PORT']
     return PORT
 
-@app.route('/redis/set/<key>/<value>',methods = ['GET'])
-def set():
-    r.set('foo', 'bar')
-    return "Value set"
+@app.get('/home/<menu>')
+def single_converter(menu):
+    return "You tried accessing 'single_converter' \
+    endpoint with value of 'menu' as " + str(menu)
 
-@app.route('/redis/get/<key>',methods = ['GET'])
-def get():
-    value = r.get('foo')
-    return value
+@app.get('/redis/set/<key>/<val>')
+def multiple_converter(key,val):
+    r.set(key, val)
+    return "Key "+str(key)+" with its value "+str(val)+" is set"
+
+@app.get('/redis/get/<key>')
+def single_converte(key):
+    value = r.get(key).decode("utf-8")
+    return "Value of key "+str(key)+" is "+str(value)
 
 if __name__ =='__main__':  
     app.run(host='0.0.0.0', port=5000, debug = True)

@@ -2,7 +2,11 @@ from flask import Flask
 import os
 import redis
 
-r = redis.Redis(host='IP',port=6379, password='SGRmY0JhbmsxMjMK')
+REDISPORT=os.environ['REDISPORT']
+REDISIP=os.environ['REDISIP']
+REDISPWD=os.environ['REDISPWD']
+
+r = redis.Redis(host=REDISIP,port=REDISPORT, password=REDISPWD)
 
 app = Flask(__name__) #creating the Flask class object
 @app.route('/',methods = ['GET']) #decorator drfines the   

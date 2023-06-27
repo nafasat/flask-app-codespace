@@ -9,14 +9,14 @@ REDISPWD=os.environ['REDISPWD']
 r = redis.Redis(host=REDISIP,port=REDISPORT, password=REDISPWD)
 
 app = Flask(__name__) #creating the Flask class object
+
 @app.route('/',methods = ['GET']) #decorator drfines the   
-
 def home():
-    return "hello, this is our first flask website"; 
+    return ("<h2>hello, this is our first flask website</h2>")
 
-@app.route('/port',methods = ['GET'])
+@app.route('/redis-port',methods = ['GET'])
 def port():
-    PORT=os.environ['PORT']
+    PORT=os.environ['REDISPORT']
     return PORT
 
 @app.get('/home/<menu>')

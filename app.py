@@ -33,6 +33,9 @@ def multiple_converter(key,val):
 def single_converte(key):
     value = r.get(key).decode("utf-8")
     return "Value of key "+str(key)+" is "+str(value)
+@app.get('/info')
+def myinfo():
+    return 'My Name is Nafasat' 
 
 if __name__ =='__main__':  
     app.run(host='0.0.0.0', port=5000, debug = True)
